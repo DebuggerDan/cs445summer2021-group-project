@@ -22,6 +22,7 @@ B. Contact the DRC of PSU for possibly audiotext transcription sources and/or co
 
 AI Training Documentation:
 OpenAI (GPT-3): https://beta.openai.com/docs/guides/answers
+OpenAI Beta API ToS [IMPORTANT]: https://beta.openai.com/policies/terms-of-use
 
 E,g. (.json file formatization-wise for GPT-3/OpenAI Beta API Models)
 {"text": "puppy A is happy", "metadata": "emotional state of puppy A"}
