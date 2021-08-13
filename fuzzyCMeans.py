@@ -21,6 +21,22 @@ def init_weights(data):
 def compute_centroid(weights, data):
 	print("This is where we'll compute the centroids...")
 
+	centroids = np.zeros((CCLUSTERS, np.shape(data)[1] - 1))
+	for cluster in range(0, CCLUSTERS):
+		fuzzy_weights = np.power(weights[:, cluster], FUZZIFIER)
+		clustSum = np.sum(fuzzy_weights)
+		print("Cluster:", cluster, "Bottom Sum:", clustSum, "fuzzy size:", np.shape(fuzzy_weights))
+		# do from 1 to avoid the labels...
+		for col in range(1, np.shape(data)[1]):
+			centroids[cluster][col - 1] = np.dot(fuzzy_weights, data[:, col]) / clustSum
+
+	print("the first centroid:\n", centroids[0, :])
+	print("size of centroids: ", np.shape(centroids))
+	return centroids
+
+			
+		
+
 def main():
 	print("Reading in Test Data...")
 	test_data = np.loadtxt("csv/mnist_test.csv", delimiter=",", skiprows=1)
@@ -30,7 +46,7 @@ def main():
 	print("size of centroids:", np.shape(centroids))
 	weights = init_weights(test_data)
 
-	compute_centroid(weights, test_data)
+	centroids = compute_centroid(weights, test_data)
 
 
 if __name__ == "__main__":
