@@ -79,6 +79,34 @@ def objective_func(weights, data, centroids):
 			sum += weights[row][col] * euclidean_dist(data[row, 1:], centroids[col, :])
 
 	return sum
+
+def confusion_matty(weights, data, centroids):
+	confusion = np.zeros((10, 10), dtype=int)
+	rows = np.shape(data)[0]
+	cols = np.shape(centroids)[0]
+
+	for row in range(0, rows):
+		smallest = math.inf
+		for col in range(0, cols):
+			small = euclidean_dist(data[row, 1:], centroids[col, :])
+			if small < smallest:
+				smallest = small
+				location = col
+		confusion[location][int(data[row, 0])] += 1
+
+	print("Confusion Matrix, rows=guesses, cols=truths:\n", confusion)
+
+	correct, total = 0, 0
+	for row in range(0, 10):
+		for col in range(0, 10):
+			total += confusion[row][col]
+			if row == col:
+				correct += confusion[row][col]
+
+	print("Accuracy:", correct, "/", total)
+	print("Percentage: ", correct / total)
+
+
 		
 
 def main():
@@ -98,6 +126,8 @@ def main():
 		weights = compute_weights(weights, test_data, centroids)
 		objfun = objective_func(weights, test_data, centroids)
 		print("Our minimizing objective func is:", objfun)
+
+	confusion_matty(weights, test_data, centroids)
 
 
 if __name__ == "__main__":
