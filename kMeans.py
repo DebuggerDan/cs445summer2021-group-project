@@ -5,8 +5,10 @@ import numpy as np
 # works up to KCLUST = 8.  After that my plot data function breaks.
 KCLUST = 10
 INPUTS = 784
-EPOCHS = 11
+EPOCHS = 13
 TRIALS = 10
+TEST_LOC = "csv/mnist_test.csv"
+TRAIN_LOC = "csv/mnist_train.csv"
 
 # selects K number of points and returns as an array.
 # chooses from col2 to start copying as it's 0-cluster, 1-labels
@@ -102,9 +104,9 @@ def accuracy(data):
 def main():
 	# creates data with labels.
 	print("loading training data...")
-	data = np.loadtxt("csv/mnist_train.csv", delimiter=",", skiprows=1)
+	data = np.loadtxt(TRAIN_LOC, delimiter=",", skiprows=1)
 	print("loading test data...")
-	testdata = np.loadtxt("csv/mnist_test.csv", delimiter=",", skiprows=1)
+	testdata = np.loadtxt(TEST_LOC, delimiter=",", skiprows=1)
 
 	labels = np.zeros((np.shape(testdata)[0], 1))
 	testdata = np.concatenate((labels, testdata), axis=1)
