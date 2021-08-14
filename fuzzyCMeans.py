@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import math
 
 CCLUSTERS = 10
-FUZZIFIER = 3
+FUZZIFIER = 9
 # larger fuzzifier is the more classes are 'washed out'
 EPOCHS = 10
 
@@ -86,13 +86,16 @@ def confusion_matty(weights, data, centroids):
 	cols = np.shape(centroids)[0]
 
 	for row in range(0, rows):
-		smallest = math.inf
+		# smallest = math.inf
+		biggest = np.max(weights[row])
 		for col in range(0, cols):
-			small = euclidean_dist(data[row, 1:], centroids[col, :])
-			if small < smallest:
-				smallest = small
-				location = col
-		confusion[location][int(data[row, 0])] += 1
+			if biggest == weights[row][col]:
+				confusion[col][int(data[row][0])] += 1
+		# 	small = euclidean_dist(data[row, 1:], centroids[col, :])
+		# 	if small < smallest:
+		# 		smallest = small
+		# 		location = col
+		# confusion[location][int(data[row, 0])] += 1
 
 	print("Confusion Matrix, rows=guesses, cols=truths:\n", confusion)
 
@@ -128,6 +131,7 @@ def main():
 		print("Our minimizing objective func is:", objfun)
 
 	confusion_matty(weights, test_data, centroids)
+	print("Centroids:", centroids)
 
 
 if __name__ == "__main__":
