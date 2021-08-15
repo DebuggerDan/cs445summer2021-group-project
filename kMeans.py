@@ -5,7 +5,7 @@ import numpy as np
 # works up to KCLUST = 8.  After that my plot data function breaks.
 KCLUST = 10
 INPUTS = 784
-EPOCHS = 13
+EPOCHS = 9
 TRIALS = 10
 TEST_LOC = "csv/mnist_test.csv"
 TRAIN_LOC = "csv/mnist_train.csv"
@@ -17,11 +17,12 @@ def randomPoints(array):
 	means = np.zeros((KCLUST, INPUTS))
 	for i in range(0, KCLUST):
 		rando = random.randint(0, size)
+		# forces the initial means to be a random dec equal to
+		# it's column, for simplicity, although there is prob a better way.
 		while array[rando][1] != i:
 			rando = random.randint(0, size)
 		means[i] = array[rando, 2:]
 
-		# means[i] = array[random.randint(0, np.shape(array)[0]), 2:]
 	return means
 
 def euclidean_dist(ptA, ptB):
@@ -115,7 +116,6 @@ def main():
 	data = np.concatenate((labels, data), axis=1)
 
 	print("starting kmeans algorithm on training data...")
-	smallest = math.inf
 	biggest = 0
 	# iterates a number of times prints our sum of squares each iteration
 	for i in range(0, TRIALS):
@@ -128,18 +128,15 @@ def main():
 		print("Sum of Round", i+1, ":", sqsum)
 		acc = accuracy(data)
 		print("Accuracy: %{:.3f}".format(acc * 100))
-		# records the smallest SoS we have gotten so far.
+		# records the biggest acc we have gotten so far.
 		if acc > biggest:
 			# smallest = sqsum
 			biggest = acc
 			centroids = means	
 	
-	# print("These are our best points:\n", centroids)
+	# runs the clustering on the testdata from best centroids.
 	testdata = find_clusters(testdata, centroids)
 	confusion_matty(testdata)
-
-	# simple_plot(data, means, 10)
-
 	
 
 if __name__ == "__main__":

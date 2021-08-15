@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import math
 
 CCLUSTERS = 10
-FUZZIFIER = 9
+FUZZIFIER = 2
 # larger fuzzifier is the more classes are 'washed out'
 EPOCHS = 10
 
