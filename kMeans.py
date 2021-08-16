@@ -1,3 +1,6 @@
+# run with python ./kMeans.py
+# kMeans algorithm largely adopted from prog 6.
+# instead of rando point, chooses point from label
 import random
 import math
 import numpy as np
@@ -25,6 +28,7 @@ def randomPoints(array):
 
 	return means
 
+# finds euclid distance between two points.
 def euclidean_dist(ptA, ptB):
 	subtracted = np.subtract(ptA, ptB)
 	sumOsquares = np.dot(subtracted, subtracted)
@@ -74,6 +78,8 @@ def sum_of_squares(data, means):
 
 	return sumOsq
 
+# takes labels to points based on euclidean distance from centroid
+# and places that into confusion matrix for comparison.
 def confusion_matty(data):
 	confusion = np.zeros((KCLUST, KCLUST), dtype=int)
 
@@ -90,6 +96,7 @@ def confusion_matty(data):
 	print("Accuracy:", correct, "/", total)
 	print("Percentage: ", correct / total)
 
+# creates a confusion matrix and returns the accuracy
 def accuracy(data):
 	confusion = np.zeros((KCLUST, KCLUST), dtype=int)
 	for row in range(0, np.shape(data)[0]):
@@ -109,6 +116,8 @@ def main():
 	print("loading test data...")
 	testdata = np.loadtxt(TEST_LOC, delimiter=",", skiprows=1)
 
+	# adds a row to 0th column for holing most recent guesses on
+	# training and test data.
 	labels = np.zeros((np.shape(testdata)[0], 1))
 	testdata = np.concatenate((labels, testdata), axis=1)
 

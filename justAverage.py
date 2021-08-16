@@ -9,6 +9,8 @@ TRIALS = 10
 TEST_LOC = "csv/mnist_test.csv"
 TRAIN_LOC = "csv/mnist_train.csv"
 
+# prints out a confusion matrix based  on 0th and 1st rows of data
+# which is where the predictions and labels are respectively.
 def confusion_matty(data):
 	confusion = np.zeros((KCLUST, KCLUST), dtype=int)
 
@@ -48,6 +50,8 @@ def find_clusters(data, centroids):
 	# returns updated cluster / point data
 	return data
 
+# averages all of the info by adding points and incrementing a
+# counter and then dividing by counters and returning array w/out counts.
 def find_averages(array):
 	centroids = np.zeros((KCLUST, INPUTS + 1))
 	for row in range(0, np.shape(array)[0]):
