@@ -17,10 +17,10 @@ Team Epic: Dan J, Taylor Noah, Camilo Schaser-Hughes
 
 Archive:
 
--Important Dates: #1. Due by 15th of August, Sunday
--Determine by 9th of August, Monday for data scraping / training data formatization
--Determine by 11th of August, Wednesday for having training data sets formatted & ready to be used
--Determine by 13th of August, Friday for having at least two or more trained NLP models ready to be analyzed -and/or fine tuned
+- Important Dates: #1. Due by 15th of August, Sunday
+- Determine by 9th of August, Monday for data scraping / training data formatization
+- Determine by 11th of August, Wednesday for having training data sets formatted & ready to be used
+- Determine by 13th of August, Friday for having at least two or more trained NLP models ready to be analyzed -and/or fine tuned
 
 -[Previous Proposal: Train a NLP-based neural network to function as a highly capable PSU helpbot using PSU-specific public resources, e.g., OIT Helpdesk & CAT.pdx.edu. By using, comparing, and contrasting with models such as GPT-2 (354M to 1554M) and the GPT-3 (OpenAI Beta API) and possibly a basic spaCy trained model, we can differentiate efficacy & the alternating training set variations to see which model was most effective in their functionality as a PSU help bot.]
 
