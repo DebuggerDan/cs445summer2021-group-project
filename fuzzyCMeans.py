@@ -6,21 +6,18 @@ import matplotlib.pyplot as plt
 import math
 
 CCLUSTERS = 10
-FUZZIFIER = 2
+FUZZIFIER = 9
 # larger fuzzifier is the more classes are 'washed out'
 EPOCHS = 10
 
+# initialized all the weights to random amounts btwn 0-1
 def init_weights(data):
 	print("Initializing random weights...")
 	size = np.shape(data)[0]
-	# print("size is", size)
-
 	weights = np.random.rand(size, CCLUSTERS)
-	# print("size of weights:", np.shape(weights))
-	# print("First 10 weight rows:\n", weights[:10, :])
-
 	return weights
 
+# computes the centroid of data points based off of weights and data
 def compute_centroid(weights, data):
 	print("computing the centroids...")
 
@@ -28,39 +25,30 @@ def compute_centroid(weights, data):
 	for cluster in range(0, CCLUSTERS):
 		fuzzy_weights = np.power(weights[:, cluster], FUZZIFIER)
 		clustSum = np.sum(fuzzy_weights)
-		# print("Cluster:", cluster, "Bottom Sum:", clustSum, "fuzzy size:", np.shape(fuzzy_weights))
 		# do from 1 to avoid the labels...
 		for col in range(1, np.shape(data)[1]):
 			centroids[cluster][col - 1] = np.dot(fuzzy_weights, data[:, col]) / clustSum
-
-	# print("the first centroid:\n", centroids[0, :])
-	# print("size of centroids: ", np.shape(centroids))
 	return centroids
 
+# uses numpy to find euclidean distance between two points.
 def euclidean_dist(ptA, ptB):
 	subtracted = np.subtract(ptA, ptB)
 	sumOsquares = np.dot(subtracted, subtracted)
 	return math.sqrt(sumOsquares)
-	# sum = 0
-	# for i in range(0, np.shape(ptA)[0]):
-	# 	sum += math.pow(ptA[i] - ptB[i], 2)
-	# return math.sqrt(sum)
 
+# computes the weights for the next round
 def compute_weights(weights, data, centroids):
 	print("recomputing weights...")
 	exponent = 2 / (FUZZIFIER - 1)
 	(rows, cols) = np.shape(weights)
-	# num_inputs = np.shape(centroids)[1]
 
 	# temp holder will keep all the euclid dist.
 	eu_dist = np.zeros((rows, cols))
-	# print("shape of this data", np.shape(data[0, 1:]))
+
 	for row in range(0, rows):
 		for col in range(0, cols):
 			eu_dist[row][col] = euclidean_dist(data[row, 1:], centroids[col, :])
 
-	# print("weights size is:", np.shape(weights))
-	# print("eu_dist holder size:", np.shape(eu_dist))
 	for row in range(0, rows):
 		for col in range(0, cols):
 			sum = 0
@@ -70,6 +58,7 @@ def compute_weights(weights, data, centroids):
 
 	return weights
 			
+# determines the sum of the weights multiplied by euclidean dist to data
 def objective_func(weights, data, centroids):
 	sum = 0
 	(rows, cols) = np.shape(weights)
@@ -80,22 +69,21 @@ def objective_func(weights, data, centroids):
 
 	return sum
 
+# creates a confusion matrix for the data
+# BUG IT DOES NOT HOWEVER HAVE ANY ASSOCIATION WITH CENTROIDS
+# TO ANY CERTAIN NUMBER SO ACC CAN NOT BE KNOWN.
 def confusion_matty(weights, data, centroids):
 	confusion = np.zeros((10, 10), dtype=int)
 	rows = np.shape(data)[0]
 	cols = np.shape(centroids)[0]
 
+	# chooses the c means with the biggest weight for each of the data
+	# points and assigns that for the centroid
 	for row in range(0, rows):
-		# smallest = math.inf
 		biggest = np.max(weights[row])
 		for col in range(0, cols):
 			if biggest == weights[row][col]:
 				confusion[col][int(data[row][0])] += 1
-		# 	small = euclidean_dist(data[row, 1:], centroids[col, :])
-		# 	if small < smallest:
-		# 		smallest = small
-		# 		location = col
-		# confusion[location][int(data[row, 0])] += 1
 
 	print("Confusion Matrix, rows=guesses, cols=truths:\n", confusion)
 
@@ -109,9 +97,6 @@ def confusion_matty(weights, data, centroids):
 	print("Accuracy:", correct, "/", total)
 	print("Percentage: ", correct / total)
 
-
-		
-
 def main():
 	print("Reading in Test Data...")
 	test_data = np.loadtxt("csv/mnist_test.csv", delimiter=",", skiprows=1)
@@ -123,6 +108,7 @@ def main():
 	objfun = objective_func(weights, test_data, centroids)
 	print("initial objective func is:", objfun)
 
+	# performs the M and the E step for a certain number of epochs.
 	for i in range(0, EPOCHS):
 		print("iteration {}...".format(i + 1))
 		centroids = compute_centroid(weights, test_data)
@@ -130,6 +116,7 @@ def main():
 		objfun = objective_func(weights, test_data, centroids)
 		print("Our minimizing objective func is:", objfun)
 
+	# RESULTS ARE NOT LISTED TO PARTICULAR DATA PTS...
 	confusion_matty(weights, test_data, centroids)
 	print("Centroids:", centroids)
 
