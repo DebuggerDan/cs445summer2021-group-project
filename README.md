@@ -12,13 +12,15 @@ Team Epic: Dan J, Taylor Noah, Camilo Schaser-Hughes
 
 
 
+![Original NIST Database 19](https://user-images.githubusercontent.com/68046886/129511239-f020dd29-ae14-409f-ae20-b645bee91acd.png)
 
 
 
 Archive:
 
 - Important Dates: #1. Due by 15th of August, Sunday
-- Determine by 9th of August, Monday for data scraping / training data formatization
+- Determine by 9th of August, Monday for data scraping / training data formatization!
+
 - Determine by 11th of August, Wednesday for having training data sets formatted & ready to be used
 - Determine by 13th of August, Friday for having at least two or more trained NLP models ready to be analyzed -and/or fine tuned
 
