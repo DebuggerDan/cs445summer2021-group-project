@@ -50,3 +50,6 @@ OpenAI Beta API Access (Dan)
 GPT-2 345M and 1554M models (Set-up using tensorflow, Dan)
 spaCy model processing (Dan)
 
+project: unrated edition (bonus clips):
+![Meet SoPhi!](https://user-images.githubusercontent.com/68046886/129514668-0beb11f6-0016-42cd-b31c-1d2c4973dea6.png)
+![spaCy-trained, constantly improving ML chatbot {trained from spaCy English & Kaggle's Cornell University Movie Conversational Archives and the Ubuntu technical support archives](https://user-images.githubusercontent.com/68046886/129514658-fddfe824-d9b6-4dda-9191-4a1c01177452.png)
